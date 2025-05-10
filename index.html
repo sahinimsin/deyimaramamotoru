@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Deyim Arama Motoru</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Deyim Arama Motoru</h1>
+    <input type="text" id="searchBox" placeholder="Bir deyim yazın...">
+    <select id="filterContext">
+        <option value="">Bağlam Seç</option>
+        <option value="başarı">Başarı</option>
+        <option value="pes etme">Pes Etme</option>
+    </select>
+    <select id="filterLanguage">
+        <option value="">Dil Seç</option>
+        <option value="tr">Türkçe</option>
+        <option value="en">İngilizce</option>
+    </select>
+    <div id="results"></div>
+    <script src="script.js"></script>
+</body>
+</html>
