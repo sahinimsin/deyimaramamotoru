@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TİDEM – Türkçe İngilizce Deyim Motoru</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 2em; color: #333; }
+    h1 { color: #2a6592; }
+    input[type="text"] { width: 100%; padding: 1em; font-size: 1.2em; border: 1px solid #ccc; margin-bottom: 1em; }
+    .result { background: white; padding: 1em; margin-bottom: 1em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .result h2 { margin: 0 0 0.5em 0; color: #20738d; }
+    .ads-placeholder { background: #eaeaea; padding: 1em; text-align: center; margin: 2em 0; border-radius: 5px; color: #888; }
+  </style>
+</head>
+<body>
+
+<h1>TİDEM – Türkçe İngilizce Deyim Motoru</h1>
+<input type="text" id="searchInput" placeholder="Bir deyim veya karşılık yazın (Türkçe ya da İngilizce)..." />
+
+<div class="ads-placeholder">[ Google Reklam Alanı ]</div>
+
+<div id="results"></div>
+
+<script>
+  const files = ['veriler1.json', 'veriler2.json', 'veriler3.json', 'veriler4.json', 'veriler5.json'];
+  let data = [];
+
+  async function fetchData() {
+    for (const file of files) {
+      const res = await fetch("veriler/" + file);
+      const json = await res.json();
+      data.push(...json);
+    }
+  }
+
+  function search(term) {
+    const lowerTerm = term.toLowerCase();
+    const filtered = data.filter(item =>
+      item["İngilizce"].toLowerCase().includes(lowerTerm) ||
+      item["Türkçe"].toLowerCase().includes(lowerTerm)
+    );
+    displayResults(filtered);
+  }
+
+  function displayResults(results) {
+    const container = document.getElementById("results");
+    container.innerHTML = "";
+    results.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "result";
+      div.innerHTML = `<h2>${item["İngilizce"]}</h2>
+                       <p><strong>Türkçe:</strong> ${item["Türkçe"]}</p>
+                       <p><strong>Türkçe Açıklama:</strong> ${item["Türkçe Açıklama"]}</p>`;
+      container.appendChild(div);
+    });
+  }
+
+  document.getElementById("searchInput").addEventListener("input", e => {
+    search(e.target.value);
+  });
+
+  fetchData();
+</script>
+
+</body>
+</html>
