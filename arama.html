@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deyim Arama Motoru – Verbolar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #007BFF;
+    }
+    #searchBox {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      font-size: 1em;
+    }
+    select {
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 1em;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      padding: 10px;
+      margin: 5px auto;
+      max-width: 700px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<h1>Deyim Arama Motoru</h1>
+<div id="searchBox">
+  <input type="text" id="searchInput" placeholder="Deyim veya kelime yazın...">
+  <select id="languageSelect">
+    <option value="tr">Türkçe → İngilizce</option>
+    <option value="en">İngilizce → Türkçe</option>
+  </select>
+</div>
+<ul id="resultList"></ul>
+
+<script>
+  const dataFiles = ["veriler1.json", "veriler2.json", "veriler3.json", "veriler4.json"];
+  let fullData = [];
+
+  // Tüm JSON dosyalarını sırayla yükle
+  Promise.all(dataFiles.map(file => fetch(file).then(res => res.json())))
+    .then(jsonArrays => {
+      fullData = jsonArrays.flat();
+    });
+
+  const input = document.getElementById("searchInput");
+  const languageSelect = document.getElementById("languageSelect");
+  const resultList = document.getElementById("resultList");
+
+  input.addEventListener("input", () => search());
+  languageSelect.addEventListener("change", () => search());
+
+  function search() {
+    const keyword = input.value.toLowerCase();
+    const lang = languageSelect.value;
+    resultList.innerHTML = "";
+
+    if (!keyword) return;
+
+    const filtered = fullData.filter(item => {
+      if (lang === "tr") {
+        return item["Türkçe Deyim"]?.toLowerCase().includes(keyword);
+      } else {
+        return item["İngilizce Deyim"]?.toLowerCase().includes(keyword);
+      }
+    });
+
+    filtered.forEach(item => {
+      const li = document.createElement("li");
+      if (lang === "tr") {
+        li.innerHTML = `<strong>${item["Türkçe Deyim"]}</strong> → ${item["İngilizce Deyim"]}`;
+      } else {
+        li.innerHTML = `<strong>${item["İngilizce Deyim"]}</strong> → ${item["Türkçe Deyim"]}`;
+      }
+      resultList.appendChild(li);
+    });
+  }
+</script>
+
+</body>
+</html>
