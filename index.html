@@ -1,67 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verbolar – Kelimelerden Kültüre Uzanan Bir Köprü</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f9fa;
-      color: #2c3e50;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-    }
-    p {
-      font-size: 1.3em;
-      margin-bottom: 2em;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    a.button {
-      display: inline-block;
-      padding: 12px 24px;
-      font-size: 1em;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color 0.3s;
-    }
-    a.button:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
-<body>
-  <h1>Verbolar</h1>
-  <p>Kelimelerden kültüre uzanan bir köprü.</p>
-  <p>Verbolar, deyimlerin ve edatlı fiillerin sadece kelime anlamlarını değil, bağlamsal derinliğini ve kültürel izlerini de keşfetmenizi sağlar.</p>
-  <a href="arama.html" class="button">Deyim Arama Motoruna Git</a>
-  <a href="veriler.html" class="button" style="margin-top: 1em; background-color: #28a745;">Veri Sayfasına Git</a>
-  <p style="margin-top: 3em; font-size: 0.9em; color: #6c757d;">© 2025 Verbolar. Tüm hakları saklıdır. | urdr@outlook.com</p>
-
-  <script>
-    Promise.all([
-      fetch('veriler/veriler1.json').then(res => res.json()),
-      fetch('veriler/veriler2.json').then(res => res.json()),
-      fetch('veriler/veriler3.json').then(res => res.json()),
-      fetch('veriler/veriler4.json').then(res => res.json())
-    ]).then(([data1, data2, data3, data4]) => {
-      const allData = [...data1, ...data2, ...data3, ...data4];
-      console.log("Toplam veri kaydı:", allData.length);
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=veriler.html" />
+    <title>Yönlendiriliyor...</title>
+  </head>
+  <body>
+    <p>Eğer otomatik yönlendirilmezseniz, <a href="veriler.html">buraya tıklayın</a>.</p>
+  </body>
 </html>
