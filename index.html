@@ -1,91 +1,67 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verbolar – Kelimelerden Kültüre Uzanan Bir Köprü</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #f8f9fa;
       color: #2c3e50;
-      margin: 0;
-      padding: 0;
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 100vh;
+      height: 100vh;
+      padding: 20px;
     }
-
-    header {
-      background-color: #007BFF;
-      color: white;
-      padding: 20px 10px;
-    }
-
     h1 {
+      font-size: 3em;
       margin-bottom: 0.2em;
     }
-
-    main {
-      padding: 30px 20px;
-    }
-
     p {
-      font-size: 1.2em;
+      font-size: 1.3em;
+      margin-bottom: 2em;
       max-width: 700px;
-      margin: 10px auto 30px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     a.button {
       display: inline-block;
-      background-color: #007BFF;
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #007bff;
       color: white;
-      padding: 14px 28px;
-      border-radius: 8px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1em;
-      transition: background-color 0.3s ease;
+      border-radius: 8px;
+      transition: background-color 0.3s;
     }
-
     a.button:hover {
       background-color: #0056b3;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #6c757d;
     }
   </style>
 </head>
 <body>
-
-<header>
   <h1>Verbolar</h1>
   <p>Kelimelerden kültüre uzanan bir köprü.</p>
-</header>
-
-<main>
-  <p>
-    Verbolar, deyimlerin ve edatlı fiillerin yalnızca sözlük anlamlarını değil, aynı zamanda <strong>bağlamsal derinliklerini</strong>, <strong>kültürel izlerini</strong> ve <strong>dilsel dönüşümlerini</strong> de keşfetmenizi sağlar.
-  </p>
-  <p>
-    🔎 İngilizce ve Türkçe deyimlerin, edatlı fiillerin ve çok daha fazlasının anlamlarını, açıklamalarını ve kullanım biçimlerini <strong>akıllı filtrelerle</strong> arayın.
-  </p>
-  <p>
-    🎯 Kimler için? Öğrenciler, çevirmenler, akademisyenler, öğretmenler, dil meraklıları…
-  </p>
-
+  <p>Verbolar, deyimlerin ve edatlı fiillerin sadece kelime anlamlarını değil, bağlamsal derinliğini ve kültürel izlerini de keşfetmenizi sağlar.</p>
   <a href="arama.html" class="button">Deyim Arama Motoruna Git</a>
-</main>
+  <a href="veriler.html" class="button" style="margin-top: 1em; background-color: #28a745;">Veri Sayfasına Git</a>
+  <p style="margin-top: 3em; font-size: 0.9em; color: #6c757d;">© 2025 Verbolar. Tüm hakları saklıdır. | urdr@outlook.com</p>
 
-<footer>
-  © 2025 Verbolar. Tüm hakları saklıdır. | İletişim: urdr@outlook.com
-</footer>
-
+  <script>
+    Promise.all([
+      fetch('veriler/veriler1.json').then(res => res.json()),
+      fetch('veriler/veriler2.json').then(res => res.json()),
+      fetch('veriler/veriler3.json').then(res => res.json()),
+      fetch('veriler/veriler4.json').then(res => res.json())
+    ]).then(([data1, data2, data3, data4]) => {
+      const allData = [...data1, ...data2, ...data3, ...data4];
+      console.log("Toplam veri kaydı:", allData.length);
+    });
+  </script>
 </body>
 </html>
