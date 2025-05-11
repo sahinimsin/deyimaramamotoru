@@ -5,4 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verbolar Verileri</title>
   ...
+  <script>
+    fetch('veriler/eriler_alt_kategorili_tam.json')
+      .then(res => res.json())
+      .then(data => {
+        allData = data;
+        renderTable(allData);
+      });
+  </script>
+</head>
+<body>
+<!-- İçerik buraya gelecek -->
+</body>
 </html>
