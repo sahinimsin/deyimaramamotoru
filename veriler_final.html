@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Verbolar Çok Dilli Veri Sayfası</title>
+</head>
+<body>
+  <table id="veriTablosu">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Deyim</th>
+        <th>İngilizce</th>
+        <th>Kategori</th>
+        <th>Açıklama</th>
+        <th>Örnek Cümle</th>
+        <th>Varyant</th>
+        <th>Bağlam</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let allData = [];
+    let currentLanguage = 'tr';
+
+    fetch('veriler/veriler_alt_kategorili_tam.json')
+      .then(res => res.json())
+      .then(data => {
+        allData = data;
+        renderTable(allData);
+        generateCategoryStats();
+      });
+
+    updateLanguage('tr');
+
+    function getLocalizedIdiom(item) {
+      switch (currentLanguage) {
+        case 'en': return item["İngilizce Deyim"] || item["Türkçe Deyim"];
+        case 'de': return item["Almanca Deyim"] || item["Türkçe Deyim"];
+        case 'fr': return item["Fransızca Deyim"] || item["Türkçe Deyim"];
+        default: return item["Türkçe Deyim"];
+      }
+    }
+
+    function getLocalizedExplanation(item) {
+      switch (currentLanguage) {
+        case 'en': return item["İngilizce Açıklama"] || '';
+        case 'de': return item["Almanca Açıklama"] || '';
+        case 'fr': return item["Fransızca Açıklama"] || '';
+        default: return item["Türkçe Açıklama"] || '';
+      }
+    }
+
+    function getLocalizedExample(item) {
+      switch (currentLanguage) {
+        case 'en': return item["İngilizce Cümle"] || '';
+        case 'de': return item["Almanca Cümle"] || '';
+        case 'fr': return item["Fransızca Cümle"] || '';
+        default: return item["Türkçe Cümle"] || '';
+      }
+    }
+
+    function getLocalizedVariant(item) {
+      switch (currentLanguage) {
+        case 'en': return item["İngilizce Varyant"] || '';
+        case 'de': return item["Almanca Varyant"] || '';
+        case 'fr': return item["Fransızca Varyant"] || '';
+        default: return item["Türkçe Varyant"] || '';
+      }
+    }
+
+    function getLocalizedContext(item) {
+      switch (currentLanguage) {
+        case 'en': return item["İngilizce Bağlam"] || '';
+        case 'de': return item["Almanca Bağlam"] || '';
+        case 'fr': return item["Fransızca Bağlam"] || '';
+        default: return item["Türkçe Bağlam"] || '';
+      }
+    }
+
+    function renderTable(filteredData) {
+      const tbody = document.querySelector("#veriTablosu tbody");
+      tbody.innerHTML = "";
+      filteredData.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${getLocalizedIdiom(item)}</td>
+          <td>${item["İngilizce Deyim"] || ''}</td>
+          <td>${item["Alt Kategori"] || ''}</td>
+          <td>${getLocalizedExplanation(item)}</td>
+          <td>${getLocalizedExample(item)}</td>
+          <td>${getLocalizedVariant(item)}</td>
+          <td>${getLocalizedContext(item)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateLanguage(lang) {
+      currentLanguage = lang;
+    }
+
+    function generateCategoryStats() {
+      console.log("Grafik oluşturma işlevi (placeholder)");
+    }
+  </script>
+</body>
+</html>
