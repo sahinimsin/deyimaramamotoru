@@ -32,6 +32,16 @@
     tr:nth-child(even) {
       background-color: #e9ecef;
     }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -48,6 +58,11 @@
     </thead>
     <tbody></tbody>
   </table>
+
+  <!-- Buton burada -->
+  <div style="text-align: center;">
+    <button onclick="window.location.href='arama.html'">Arama Motoruna Git</button>
+  </div>
 
   <script>
     fetch('veriler/veriler_alt_kategorili_tam.json')
