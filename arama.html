@@ -78,7 +78,7 @@
   input.addEventListener("input", () => search());
   languageSelect.addEventListener("change", () => search());
 
-   function search() {
+  function search() {
     const keyword = input.value.toLowerCase();
     const lang = languageSelect.value;
     resultList.innerHTML = "";
@@ -107,3 +107,6 @@
     });
   }
 </script>
+
+</body>
+</html>
