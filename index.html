@@ -2,86 +2,11 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; URL=arama.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verbolar – Deyim Arama Motoru</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #e9ecef;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 30px;
-    }
-  </style>
+  <title>Yönlendiriliyor...</title>
 </head>
 <body>
-  <h1>Verbolar JSON Verileri</h1>
-  <table id="veriTablosu">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Türkçe Deyim</th>
-        <th>İngilizce Deyim</th>
-        <th>Geniş Kategori</th>
-        <th>Alt Kategori</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- Sayfa son olarak: 2025-05-13 tarihinde yeniden tetiklendi. -->
-
-  <div style="text-align: center;">
-    <button onclick="window.location.href='arama.html'">Arama Motoruna Git</button>
-  </div>
-
-  <script>
-    fetch('veriler/veriler_alt_kategorili_tam.json')
-      .then(res => res.json())
-      .then(data => {
-        const tbody = document.querySelector("#veriTablosu tbody");
-        data.forEach((item, index) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${item["Türkçe Deyim"] || item["Türkçe"] || ''}</td>
-            <td>${item["İngilizce Deyim"] || item["İngilizce"] || ''}</td>
-            <td>${item["Geniş Kategori"] || ''}</td>
-            <td>${item["Alt Kategori"] || ''}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      });
-  </script>
+  <p>Eğer yönlendirilmediyseniz, <a href="arama.html">buraya tıklayın</a>.</p>
 </body>
 </html>
