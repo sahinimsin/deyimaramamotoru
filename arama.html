@@ -78,7 +78,7 @@
   input.addEventListener("input", () => search());
   languageSelect.addEventListener("change", () => search());
 
-  function search() {
+   function search() {
     const keyword = input.value.toLowerCase();
     const lang = languageSelect.value;
     resultList.innerHTML = "";
@@ -88,4 +88,21 @@
     const filtered = fullData.filter(item => {
       const tr = item["Türkçe Deyim"]?.toLowerCase() || "";
       const en = item["İngilizce Deyim"]?.toLowerCase() || "";
-      return
+      return lang === "tr" ? tr.includes(keyword) : en.includes(keyword);
+    });
+
+    if (filtered.length === 0) {
+      resultList.innerHTML = `<li style="color:gray;">Eşleşen deyim bulunamadı.</li>`;
+      return;
+    }
+
+    filtered.forEach(item => {
+      const li = document.createElement("li");
+      const tr = item["Türkçe Deyim"] || "(boş)";
+      const en = item["İngilizce Deyim"] || "(boş)";
+      li.innerHTML = lang === "tr" 
+        ? `<strong>${tr}</strong> → ${en}` 
+        : `<strong>${en}</strong> → ${tr}`;
+      resultList.appendChild(li);
+    });
+  }
