@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verbolar Test Verileri</title>
+</head>
+<body>
+  <h1>Test JSON Verisi Yükleniyor...</h1>
+  <ul id="veriListesi"></ul>
+
+  <script>
+    fetch('veriler/veriler_test.json')
+      .then(res => res.json())
+      .then(data => {
+        const liste = document.getElementById("veriListesi");
+        data.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = `${item["İngilizce Deyim"]} → ${item["Türkçe Deyim"]}`;
+          liste.appendChild(li);
+        });
+      })
+      .catch(error => {
+        document.body.innerHTML = `<p style="color:red;">Hata: ${error.message}</p>`;
+        console.error("Veri yükleme hatası:", error);
+      });
+  </script>
+</body>
+</html>
