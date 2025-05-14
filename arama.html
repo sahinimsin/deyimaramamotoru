@@ -67,3 +67,25 @@
     })
     .catch(error => {
       document.getElementById("resultList").innerHTML = 
+        `<li style="color:red;">Veri yükleme hatası: ${error.message}</li>`;
+      console.error("Veri yükleme hatası:", error);
+    });
+
+  const input = document.getElementById("searchInput");
+  const languageSelect = document.getElementById("languageSelect");
+  const resultList = document.getElementById("resultList");
+
+  input.addEventListener("input", () => search());
+  languageSelect.addEventListener("change", () => search());
+
+  function search() {
+    const keyword = input.value.toLowerCase();
+    const lang = languageSelect.value;
+    resultList.innerHTML = "";
+
+    if (!keyword) return;
+
+    const filtered = fullData.filter(item => {
+      const tr = item["Türkçe Deyim"]?.toLowerCase() || "";
+      const en = item["İngilizce Deyim"]?.toLowerCase() || "";
+      return
