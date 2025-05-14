@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Deyim Arama Motoru – Verbolar</title>
   <style>
     body {
@@ -38,75 +38,94 @@
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
+    #aboutLink {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-weight: bold;
+    }
+    #aboutLink a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    #aboutLink a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-<h1>Deyim Arama Motoru</h1>
-<div id="searchBox">
-  <input type="text" id="searchInput" placeholder="Deyim veya kelime yazın...">
-  <select id="languageSelect">
-    <option value="tr">Türkçe → İngilizce</option>
-    <option value="en">İngilizce → Türkçe</option>
-  </select>
-</div>
-<ul id="resultList"></ul>
+  <div id="aboutLink">
+    <a href="about.html">Hakkında</a>
+  </div>
 
-<script>
-  let fullData = [];
+  <h1>Deyim Arama Motoru</h1>
 
-  fetch("veriler/veriler_test.json")
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Veri yüklenemedi: " + response.statusText);
+  <div id="searchBox">
+    <input type="text" id="searchInput" placeholder="Deyim veya kelime yazın...">
+    <select id="languageSelect">
+      <option value="tr">Türkçe → İngilizce</option>
+      <option value="en">İngilizce → Türkçe</option>
+    </select>
+  </div>
+
+  <ul id="resultList"></ul>
+
+  <script>
+    let fullData = [];
+
+    fetch("veriler/veriler_test.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Veri yüklenemedi: " + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        fullData = data;
+      })
+      .catch(error => {
+        document.getElementById("resultList").innerHTML = 
+          `<li style="color:red;">Veri yükleme hatası: ${error.message}</li>`;
+        console.error("Veri yükleme hatası:", error);
+      });
+
+    const input = document.getElementById("searchInput");
+    const languageSelect = document.getElementById("languageSelect");
+    const resultList = document.getElementById("resultList");
+
+    input.addEventListener("input", () => search());
+    languageSelect.addEventListener("change", () => search());
+
+    function search() {
+      const keyword = input.value.toLowerCase();
+      const lang = languageSelect.value;
+      resultList.innerHTML = "";
+
+      if (!keyword) return;
+
+      const filtered = fullData.filter(item => {
+        const tr = item["Türkçe Deyim"]?.toLowerCase() || "";
+        const en = item["İngilizce Deyim"]?.toLowerCase() || "";
+        return lang === "tr" ? tr.includes(keyword) : en.includes(keyword);
+      });
+
+      if (filtered.length === 0) {
+        resultList.innerHTML = `<li style="color:gray;">Eşleşen deyim bulunamadı.</li>`;
+        return;
       }
-      return response.json();
-    })
-    .then(data => {
-      fullData = data;
-    })
-    .catch(error => {
-      document.getElementById("resultList").innerHTML = 
-        `<li style="color:red;">Veri yükleme hatası: ${error.message}</li>`;
-      console.error("Veri yükleme hatası:", error);
-    });
 
-  const input = document.getElementById("searchInput");
-  const languageSelect = document.getElementById("languageSelect");
-  const resultList = document.getElementById("resultList");
-
-  input.addEventListener("input", () => search());
-  languageSelect.addEventListener("change", () => search());
-
-  function search() {
-    const keyword = input.value.toLowerCase();
-    const lang = languageSelect.value;
-    resultList.innerHTML = "";
-
-    if (!keyword) return;
-
-    const filtered = fullData.filter(item => {
-      const tr = item["Türkçe Deyim"]?.toLowerCase() || "";
-      const en = item["İngilizce Deyim"]?.toLowerCase() || "";
-      return lang === "tr" ? tr.includes(keyword) : en.includes(keyword);
-    });
-
-    if (filtered.length === 0) {
-      resultList.innerHTML = `<li style="color:gray;">Eşleşen deyim bulunamadı.</li>`;
-      return;
+      filtered.forEach(item => {
+        const li = document.createElement("li");
+        const tr = item["Türkçe Deyim"] || "(boş)";
+        const en = item["İngilizce Deyim"] || "(boş)";
+        li.innerHTML = lang === "tr" 
+          ? `<strong>${tr}</strong> → ${en}` 
+          : `<strong>${en}</strong> → ${tr}`;
+        resultList.appendChild(li);
+      });
     }
-
-    filtered.forEach(item => {
-      const li = document.createElement("li");
-      const tr = item["Türkçe Deyim"] || "(boş)";
-      const en = item["İngilizce Deyim"] || "(boş)";
-      li.innerHTML = lang === "tr" 
-        ? `<strong>${tr}</strong> → ${en}` 
-        : `<strong>${en}</strong> → ${tr}`;
-      resultList.appendChild(li);
-    });
-  }
-</script>
+  </script>
 
 </body>
 </html>
