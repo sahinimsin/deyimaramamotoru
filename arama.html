@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deyim Arama Motoru – Verbolar</title>
   <style>
     body {
@@ -55,7 +55,7 @@
 <script>
   let fullData = [];
 
- fetch("veriler/veriler_test.json")
+  fetch("veriler/veriler_test.json")
     .then(response => {
       if (!response.ok) {
         throw new Error("Veri yüklenemedi: " + response.statusText);
