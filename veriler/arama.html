@@ -23,11 +23,11 @@
       <tr>
         <th>ID</th>
         <th>Tür</th>
+        <th>Bağlam Fiil ve Anlam Kümesi</th>
         <th>Türkçe Deyim</th>
         <th>İngilizce Deyim</th>
         <th>Türkçe Örnek Cümle</th>
         <th>İngilizce Örnek Cümle</th>
-        <th>Bağlam Fiili</th>
         <th>Kullanım Tarzı</th>
       </tr>
     </thead>
@@ -52,11 +52,11 @@
         const row = `<tr>
           <td>${item.ID || ''}</td>
           <td>${item.Tür || ''}</td>
+          <td>${item["Bağlam"] || ''}</td>
           <td>${item["Türkçe Deyim"] || ''}</td>
           <td>${item["İngilizce Deyim"] || ''}</td>
           <td>${item["Türkçe Örnek Cümle"] || ''}</td>
           <td>${item["İngilizce Örnek Cümle"] || ''}</td>
-          <td>${item["Bağlam"] || ''}</td>
           <td>${item["Kullanım Tarzı"] || ''}</td>
         </tr>`;
         tbody.innerHTML += row;
