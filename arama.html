@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Verbolarr2 - Deyim Arama Paneli</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    input { padding: 5px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Verbolarr2 - Deyim Arama Paneli</h2>
+
+  <input type="text" id="searchTurkish" placeholder="Türkçe Deyim Ara">
+  <input type="text" id="searchEnglish" placeholder="İngilizce Deyim Ara">
+  <button onclick="filterData()">Ara</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tür</th>
+        <th>Bağlam Fiil ve Anlam Kümesi</th>
+        <th>Türkçe Deyim</th>
+        <th>İngilizce Deyim</th>
+        <th>Türkçe Örnek Cümle</th>
+        <th>İngilizce Örnek Cümle</th>
+        <th>Kullanım Tarzı</th>
+      </tr>
+    </thead>
+    <tbody id="resultsBody"></tbody>
+  </table>
+
+  <script>
+    let data = [];
+
+    // Veriyi yükle
+    fetch('verbolar_panel_tr-en_ornekset_20250601.json')
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        displayData(data);
+      });
+
+    function displayData(dataArray) {
+      const tbody = document.getElementById('resultsBody');
+      tbody.innerHTML = '';
+      dataArray.forEach(item => {
+        const row = `<tr>
+          <td>${item.ID || ''}</td>
+          <td>${item.Tür || ''}</td>
+          <td>${item["Bağlam"] || ''}</td>
+          <td>${item["Türkçe Deyim"] || ''}</td>
+          <td>${item["İngilizce Deyim"] || ''}</td>
+          <td>${item["Türkçe Örnek Cümle"] || ''}</td>
+          <td>${item["İngilizce Örnek Cümle"] || ''}</td>
+          <td>${item["Kullanım Tarzı"] || ''}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filterData() {
+      const turkish = document.getElementById('searchTurkish').value.toLowerCase();
+      const english = document.getElementById('searchEnglish').value.toLowerCase();
+      const filtered = data.filter(item => {
+        return (item["Türkçe Deyim"] && item["Türkçe Deyim"].toLowerCase().includes(turkish)) &&
+               (item["İngilizce Deyim"] && item["İngilizce Deyim"].toLowerCase().includes(english));
+      });
+      displayData(filtered);
+    }
+  </script>
+</body>
+</html>
