@@ -1,48 +1,22 @@
----
+# 📘 Verbolar – Çok Dilli Deyim ve Öbek Fiil Platformu
 
-## 📌 İçerik Özellikleri
+Bu GitHub deposu, [https://www.verbolar.com](https://www.verbolar.com) adresindeki platformun veri yapısını içermektedir.
 
-- 📘 Türkçe ve İngilizce deyimler
-- 🔁 Öbek fiiller (phrasal verbs) ve karşılıklı eşleştirmeleri
-- 🧩 Anlam kümesi, bağlam, kullanım tarzı, ağırlık, yaygınlık
-- ✍️ Örnek cümleler ve varyant cümlelerle açıklama
-- 🎯 Filtrelenebilir ve sınıflandırılabilir veri yapısı
-- 📊 Kullanıma hazır Excel altyapısı
+🔗 **Ana Site:** [https://www.verbolar.com](https://www.verbolar.com)
 
 ---
 
-## 👤 Proje Sahibi
+## 📌 Hakkında
 
-**Dr. Şahin Kesikminare** — Projenin kurucusu ve tek geliştiricisi.  
-Tüm veri modellemesi, sistem mimarisi, dilsel eşleştirme algoritmaları ve içerik üretimi Dr. Kesikminare tarafından bireysel olarak tasarlanmış ve uygulanmıştır.  
-Proje; sistem mühendisliği, psikoloji, tıp, dilbilim ve yapay zekâ bileşenlerini entegre eden özgün ve disiplinlerarası bir çalışmadır.
-
----
-
-## 🤝 Bağlantılı Çalışma Grupları
-
-Bu veri tabanı temel alınarak ayrı bir ekip (3 kişilik destek grubu), içerikte yer alan deyim ve öbek fiilleri kullanarak farklı bir uygulama ve türev proje geliştirmektedir.  
-Söz konusu ekip doğrudan bu ana veritabanının üreticisi değildir.
+Verbolar, çok dilli bir deyim ve öbek fiil arama platformudur.  
+Platformun temelleri 40 yıl önce Dr. Şahin Kesikminare tarafından atılmış, 2025 itibariyle dijital ortama aktarılmıştır.
 
 ---
 
-## 🔮 Planlanan Geliştirmeler
+## 👤 Geliştirme ve İçerik
 
-- 🔍 Web arayüzü (filtreleme, arama, görsel eşleştirme)
-- 🌍 Çok dilli yapı (Fransızca, Almanca, vs.)
-- 📚 Akademik yayın hazırlığı (projenin makaleleştirilmesi)
-- 🤖 Yapay zekâ destekli deyim ve öbek fiil tahmin sistemi
-- 📱 Mobil erişim
+Tüm dilsel eşleştirmeler, bağlam tasarımları ve veri yapıları  
+**Dr. Şahin Kesikminare** liderliğinde hazırlanmıştır.
 
----
-
-## 💬 İletişim
-
-Her türlü katkı ve öneri için lütfen Dr. Şahin Kesikminare ile iletişime geçiniz:  
-✉️ urdr@outlook.com  
-📞 +90 555 318 24 28
-
----
-
-# deyimaramamotoru  
-Türkçe İngilizce deyimler için arama motoru veri deposu
+Bu depo, yalnızca veri dosyalarını barındırır.  
+Web tabanlı arama paneli için lütfen [www.verbolar.com](https://www.verbolar.com) adresini ziyaret ediniz.
