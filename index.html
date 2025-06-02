@@ -1,11 +1,164 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <meta name="author" content="Dr. Şahin Kesikminare">
+  <meta name="description" content="Verbolar: çok dilli deyim ve öbek fiil arama platformu.">
+  <meta name="keywords" content="Verbolar, deyim arama, öbek fiil, Şahin Kesikminare, İngilizce Türkçe sözlük, çok dilli platform">
+  <meta property="og:title" content="Verbolar – Deyim ve Öbek Fiil Arama Platformu">
+  <meta property="og:description" content="Dr. Şahin Kesikminare tarafından geliştirilen çok dilli deyim ve öbek fiil arama platformudur.">
+  <meta property="og:url" content="https://verbolar.com">
+  <meta property="og:image" content="https://verbolar.com/sahin_kesikminare.jpg">
+  <link rel="icon" href="https://verbolar.com/favicon.ico" type="image/x-icon">
+  <meta name="author" content="Dr. Şahin Kesikminare">
+  <meta name="description" content="Verbolar: Dr. Şahin Kesikminare'nin geliştirdiği çok dilli deyim ve öbek fiil arama platformudur.">
+  <meta name="keywords" content="Deyim Arama, Öbek Fiil, İngilizce Türkçe, Şahin Kesikminare, Verbolar, çok dilli sözlük">
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=veriler/arama.html" />
-  <title>Verbolar Yönlendiriliyor...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verbolar - Deyim Arama Paneli</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      font-size: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: left;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 12px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (min-width: 600px) {
+      input {
+        width: calc(50% - 10px);
+        margin-right: 10px;
+      }
+      button {
+        width: auto;
+      }
+    }
+  </style>
+  <style>
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+<style>
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+</style>
 </head>
-<body>
-  <p>Yönlendiriliyorsunuz... Eğer otomatik yönlendirilmezseniz <a href="veriler/arama.html">buraya tıklayın</a>.</p>
+<body oncopy="return false" oncut="return false" onpaste="return false" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+  <h2>Deyim ve Öbek Fiiller Arama Platformu</h2>
+  <a href="#info" style="font-size: 12px; color: #0077cc; text-decoration: none; display: inline-block; margin-top: 4px;">ℹ️ Hakkında</a>
+
+  <input type="text" id="searchTurkish" placeholder="Türkçe">
+  <input type="text" id="searchEnglish" placeholder="İngilizce">
+  <button onclick="filterData()">Ara</button>
+
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tür</th>
+          <th>Bağlam Fiil ve Anlam Kümesi</th>
+          <th>Deyim / Öbek Fiil (TR)</th>
+          <th>Öbek Fiil (EN)</th>
+
+
+          <th>Türkçe Örnek Cümle</th>
+          <th>İngilizce Örnek Cümle</th>
+          <th>Kullanım Tarzı</th>
+        </tr>
+      </thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+  </div>
+
+  <div id="info" style="margin-top: 40px; padding: 10px; border-top: 1px solid #ccc; font-size: 11px; color: #555; display: flex; align-items: center; gap: 15px;">
+    <img src="sahin_kesikminare.jpg" alt="Dr. Şahin Kesikminare" style="width: 80px; height: auto; border-radius: 4px;">
+    <strong>Hakkında:</strong> Verbolar, deyim ve öbek fiillerin örneklerle desteklenen çok dilli bütünsel bir arama platformudur. 
+    Platformun bilgi tabanına esas çalışmaları <strong>Dr. Şahin Kesikminare</strong> tarafından 40 yıl önce başlamış ve 2025 Haziran itibariyle yaklaşık <strong>2 milyon</strong> civarında bir yapıta ulaşmıştır. 
+    Platformun dijital ortama aktarılması yeni başlamış olup süreç içerisinde güncellemelerle devam edecektir.
+  </div>
+
+  <script>
+    let data = [];
+
+    fetch('verbolar_panel_tr-en_ornekset_20250601.json')
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        displayData(data);
+      });
+
+    function formatBaglamFiil(text) {
+      if (!text) return '';
+      const [baglam, anlamKumesi] = text.split('Anlam Kümesi:');
+      const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
+      return `<strong>Bağlam Fiil:</strong> ${baglam.trim()}<br><strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}`;
+    }
+
+    function displayData(dataArray) {
+      const tbody = document.getElementById('resultsBody');
+      tbody.innerHTML = '';
+      dataArray.forEach(item => {
+        const row = `<tr>
+          <td>${item["Kimlik No"] || ''}</td>
+          <td>${item["Tür"] || ''}</td>
+          <td>${formatBaglamFiil(item["Bağlam Fiil"])}</td>
+          <td>${item["Türkçe Deyim"] || ''}</td>
+          <td>${item["İngilizce Deyim"] || ''}</td>
+          <td>${item["Türkçe Cümle"] || ''}</td>
+          <td>${item["İngilizce Cümle"] || ''}</td>
+          <td>${item["Anlam Alanı"] || ''}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filterData() {
+      const turkish = document.getElementById('searchTurkish').value.toLowerCase();
+      const english = document.getElementById('searchEnglish').value.toLowerCase();
+      const filtered = data.filter(item => {
+        const turkishMatch = !turkish || (
+          item["Türkçe Deyim"] &&
+          item["Türkçe Deyim"].toLowerCase().split(',').some(x => x.trim().includes(turkish))
+        );
+        const englishMatch = !english || (
+          item["İngilizce Deyim"] &&
+          item["İngilizce Deyim"].toLowerCase().split(',').some(x => x.trim().includes(english))
+        );
+        return turkishMatch && englishMatch;
+      });
+      displayData(filtered);
+    }
+  </script>
 </body>
 </html>
