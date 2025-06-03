@@ -13,18 +13,51 @@
   <link rel="icon" href="https://verbolar.com/favicon.ico" type="image/x-icon">
   <title>Verbolar - Deyim ve Öbek Fiil Arama Paneli</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; font-size: 16px; text-align: center; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background-color: #f2f2f2; position: sticky; top: 0; z-index: 1; }
-    input { margin: 5px; padding: 5px; width: 200px; }
-    button { padding: 6px 12px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box input {
+      padding: 8px;
+      margin: 0 5px;
+      width: 200px;
+      text-align: center;
+    }
+    .search-box button {
+      padding: 8px 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
   </style>
 </head>
 <body>
   <h2>Deyim ve Öbek Fiiller Arama Platformu</h2>
-  <input id="searchInput" placeholder="Aramak için yazın..." type="text" />
-  <button onclick="filterData()">Ara</button>
+  <div class="search-box">
+    <input id="searchTurkish" type="text" placeholder="Türkçe">
+    <input id="searchEnglish" type="text" placeholder="İngilizce">
+    <button onclick="filterData()">Ara</button>
+  </div>
   <div style="overflow-x: auto;">
     <table>
       <thead>
@@ -47,33 +80,46 @@
 
     fetch('verbolar_panel_tr-en_ornekset_20250601.json')
       .then(response => response.json())
-      .then(json => { data = json; })
+      .then(json => {
+        data = json;
+        displayData(data);
+      })
       .catch(error => console.error('Veri yükleme hatası:', error));
 
-    function filterData() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
+    function formatBaglamFiil(text) {
+      if (!text) return '';
+      const [baglam, anlamKumesi] = text.split('Anlam Kümesi:');
+      const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
+      return `<strong>Bağlam Fiil:</strong> ${baglam.trim()}<br><strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}`;
+    }
+
+    function displayData(dataArray) {
       const tbody = document.getElementById('resultsBody');
       tbody.innerHTML = '';
-
-      const filtered = data.filter(item =>
-        Object.values(item).some(value =>
-          value && value.toString().toLowerCase().includes(input)
-        )
-      );
-
-      filtered.forEach(item => {
-        const row = `<tr>
-          <td>${item.ID || ''}</td>
-          <td>${item.Tür || ''}</td>
-          <td>${item["Bağlam Fiil ve Anlam Kümesi"] || ''}</td>
-          <td>${item["Öbek Fiil / Deyim (TR)"] || ''}</td>
-          <td>${item["Öbek Fiil / Deyim (EN)"] || ''}</td>
-          <td>${item["Türkçe Örnek Cümle"] || ''}</td>
-          <td>${item["İngilizce Örnek Cümle"] || ''}</td>
-          <td>${item["Kullanım Tarzı"] || ''}</td>
-        </tr>`;
+      dataArray.forEach(item => {
+        const row = `
+          <tr>
+            <td>${item.ID || ''}</td>
+            <td>${item.Tür || ''}</td>
+            <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || '')}</td>
+            <td>${item["Öbek Fiil / Deyim (TR)"] || ''}</td>
+            <td>${item["Öbek Fiil / Deyim (EN)"] || ''}</td>
+            <td>${item["Türkçe Örnek Cümle"] || ''}</td>
+            <td>${item["İngilizce Örnek Cümle"] || ''}</td>
+            <td>${item["Kullanım Tarzı"] || ''}</td>
+          </tr>`;
         tbody.innerHTML += row;
       });
+    }
+
+    function filterData() {
+      const trInput = document.getElementById('searchTurkish').value.toLowerCase();
+      const enInput = document.getElementById('searchEnglish').value.toLowerCase();
+      const filtered = data.filter(item =>
+        (item["Öbek Fiil / Deyim (TR)"] || '').toLowerCase().includes(trInput) &&
+        (item["Öbek Fiil / Deyim (EN)"] || '').toLowerCase().includes(enInput)
+      );
+      displayData(filtered);
     }
   </script>
 </body>
