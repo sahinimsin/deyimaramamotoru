@@ -4,24 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Dr. Şahin Kesikminare">
-  <meta name="description" content="Verbolar: çok dilli deyim ve öbek fiil arama platformu.">
-  <meta name="keywords" content="Verbolar, deyim arama, öbek fiil, Şahin Kesikminare, İngilizce Türkçe sözlük, çok dilli platform">
-  <meta property="og:title" content="Verbolar – Deyim ve Öbek Fiil Arama Platformu">
-  <meta property="og:description" content="Dr. Şahin Kesikminare tarafından geliştirilen çok dilli deyim ve öbek fiil arama platformudur.">
-  <meta property="og:url" content="https://verbolar.com">
-  <meta property="og:image" content="https://verbolar.com/sahin_kesikminare.jpg">
-  <link rel="icon" href="https://verbolar.com/favicon.ico" type="image/x-icon">
-  <title>Verbolar - Deyim ve Öbek Fiil Arama Paneli</title>
+  <title>Verbolar - Deyim ve Öbek Fiiller Arama Platformu</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      font-size: 16px;
-      background-color: #f9f9f9;
+      font-size: 12px;
+      background-color: #f4f4f4;
+      color: #333;
     }
     h2 {
       text-align: center;
-      margin-bottom: 20px;
     }
     .search-box {
       text-align: center;
@@ -39,25 +32,37 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: #fff;
+      margin-top: 20px;
+      table-layout: fixed;
     }
     th, td {
       border: 1px solid #ccc;
-      padding: 10px;
+      padding: 6px;
       text-align: left;
+      vertical-align: top;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 12px;
     }
     th {
-      background-color: #eee;
+      background-color: #e0e0e0;
+      vertical-align: top;
+    }
+    details summary {
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <h2>Deyim ve Öbek Fiiller Arama Platformu</h2>
+
   <div class="search-box">
-    <input id="searchTurkish" type="text" placeholder="Türkçe">
-    <input id="searchEnglish" type="text" placeholder="İngilizce">
+    <input type="text" id="searchTurkish" placeholder="Türkçe">
+    <input type="text" id="searchEnglish" placeholder="İngilizce">
     <button onclick="filterData()">Ara</button>
   </div>
+
   <div style="overflow-x: auto;">
     <table>
       <thead>
@@ -75,6 +80,7 @@
       <tbody id="resultsBody"></tbody>
     </table>
   </div>
+
   <script>
     let data = [];
 
@@ -82,43 +88,60 @@
       .then(response => response.json())
       .then(json => {
         data = json;
-        displayData(data);
-      })
-      .catch(error => console.error('Veri yükleme hatası:', error));
+      });
 
     function formatBaglamFiil(text) {
       if (!text) return '';
-      const [baglam, anlamKumesi] = text.split('Anlam Kümesi:');
+      const cleaned = text.replace("Bağlam Fiil: Bağlam Fiil:", "Bağlam Fiil:");
+      const [baglam, anlamKumesi] = cleaned.split('Anlam Kümesi:');
       const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
-      return `<strong>Bağlam Fiil:</strong> ${baglam.trim()}<br><strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}`;
+      return `
+        <details>
+          <summary><strong>Bağlam Fiil:</strong> ${baglam.trim()}</summary>
+          <strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}
+        </details>
+      `;
     }
 
     function displayData(dataArray) {
       const tbody = document.getElementById('resultsBody');
       tbody.innerHTML = '';
       dataArray.forEach(item => {
-        const row = `
-          <tr>
-            <td>${item.ID || ''}</td>
-            <td>${item.Tür || ''}</td>
-            <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || '')}</td>
-            <td>${item["Öbek Fiil / Deyim (TR)"] || ''}</td>
-            <td>${item["Öbek Fiil / Deyim (EN)"] || ''}</td>
-            <td>${item["Türkçe Örnek Cümle"] || ''}</td>
-            <td>${item["İngilizce Örnek Cümle"] || ''}</td>
-            <td>${item["Kullanım Tarzı"] || ''}</td>
-          </tr>`;
+        const row = `<tr>
+          <td>${item["ID"] || ''}</td>
+          <td>${item["Tür"] || ''}</td>
+          <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"])}</td>
+          <td>${item["Türkçe Deyim"] || ''}</td>
+          <td>${item["İngilizce Deyim"] || ''}</td>
+          <td>${item["Türkçe Örnek Cümle"] || ''}</td>
+          <td>${item["İngilizce Örnek Cümle"] || ''}</td>
+          <td>${item["Kullanım Tarzı"] || ''}</td>
+        </tr>`;
         tbody.innerHTML += row;
       });
     }
 
     function filterData() {
-      const trInput = document.getElementById('searchTurkish').value.toLowerCase();
-      const enInput = document.getElementById('searchEnglish').value.toLowerCase();
-      const filtered = data.filter(item =>
-        (item["Öbek Fiil / Deyim (TR)"] || '').toLowerCase().includes(trInput) &&
-        (item["Öbek Fiil / Deyim (EN)"] || '').toLowerCase().includes(enInput)
-      );
+      const turkish = document.getElementById('searchTurkish').value.toLowerCase();
+      const english = document.getElementById('searchEnglish').value.toLowerCase();
+
+      if (!turkish && !english) {
+        document.getElementById('resultsBody').innerHTML = '';
+        return;
+      }
+
+      const filtered = data.filter(item => {
+        const trMatch = !turkish || (
+          (item["Türkçe Deyim"] && item["Türkçe Deyim"].toLowerCase().includes(turkish)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(turkish))
+        );
+        const enMatch = !english || (
+          (item["İngilizce Deyim"] && item["İngilizce Deyim"].toLowerCase().includes(english)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(english))
+        );
+        return trMatch && enMatch;
+      });
+
       displayData(filtered);
     }
   </script>
