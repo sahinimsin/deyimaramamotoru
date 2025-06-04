@@ -107,14 +107,14 @@
       tbody.innerHTML = '';
       dataArray.forEach(item => {
         const row = `<tr>
-          <td>${item["Kimlik No"] || ''}</td>
+          <td>${item["Kimlik No"] || item["ID"] || ''}</td>
           <td>${item["Tür"] || ''}</td>
-          <td>${formatBaglamFiil(item["Bağlam Fiil"] || '')}</td>
+          <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || item["Bağlam Fiil"] || '')}</td>
           <td>${item["Türkçe Deyim"] || ''}</td>
           <td>${item["İngilizce Deyim"] || ''}</td>
-          <td>${item["Türkçe Cümle"] || ''}</td>
-          <td>${item["İngilizce Cümle"] || ''}</td>
-          <td>${item["Anlam Alanı"] || ''}</td>
+          <td>${item["Türkçe Örnek Cümle"] || item["Türkçe Cümle"] || ''}</td>
+          <td>${item["İngilizce Örnek Cümle"] || item["İngilizce Cümle"] || ''}</td>
+          <td>${item["Kullanım Tarzı"] || item["Anlam Alanı"] || ''}</td>
         </tr>`;
         tbody.innerHTML += row;
       });
@@ -132,10 +132,12 @@
       const filtered = data.filter(item => {
         const trMatch = !turkish || (
           (item["Türkçe Deyim"] && item["Türkçe Deyim"].toLowerCase().includes(turkish)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(turkish)) ||
           (item["Bağlam Fiil"] && item["Bağlam Fiil"].toLowerCase().includes(turkish))
         );
         const enMatch = !english || (
           (item["İngilizce Deyim"] && item["İngilizce Deyim"].toLowerCase().includes(english)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(english)) ||
           (item["Bağlam Fiil"] && item["Bağlam Fiil"].toLowerCase().includes(english))
         );
         return trMatch && enMatch;
@@ -146,4 +148,3 @@
   </script>
 </body>
 </html>
-
