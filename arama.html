@@ -87,6 +87,7 @@
       .then(response => response.json())
       .then(json => {
         data = json;
+        displayData([]); // Başlangıçta tablo boş kalsın
       });
 
     function formatBaglamFiil(text) {
@@ -125,7 +126,7 @@
       const english = document.getElementById('searchEnglish').value.toLowerCase();
 
       if (!turkish && !english) {
-        document.getElementById('resultsBody').innerHTML = '';
+        displayData([]);
         return;
       }
 
