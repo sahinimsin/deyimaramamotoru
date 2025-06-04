@@ -68,7 +68,7 @@
         <tr>
           <th>Kimlik No</th>
           <th>Tür</th>
-          <th>Bağlam Fiil</th>
+          <th>Bağlam Fiil ve Anlam Kümesi</th>
           <th>Türkçe Deyim</th>
           <th>İngilizce Deyim</th>
           <th>Türkçe Cümle</th>
@@ -91,7 +91,7 @@
 
     function formatBaglamFiil(text) {
       if (!text) return '';
-      const cleaned = text.replace("Bağlam Fiil: Bağlam Fiil:", "Bağlam Fiil:");
+      const cleaned = text.replace(/Bağlam Fiil:\s*/g, '').trim();
       const [baglam, anlamKumesi] = cleaned.split('Anlam Kümesi:');
       const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
       return `
@@ -109,11 +109,11 @@
         const row = `<tr>
           <td>${item["Kimlik No"] || item["ID"] || ''}</td>
           <td>${item["Tür"] || ''}</td>
-          <td>${formatBaglamFiil(item["Bağlam Fiil"] || item["Bağlam Fiil ve Anlam Kümesi"] || '')}</td>
+          <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || item["Bağlam Fiil"] || '')}</td>
           <td>${item["Türkçe Deyim"] || ''}</td>
           <td>${item["İngilizce Deyim"] || ''}</td>
-          <td>${item["Türkçe Cümle"] || item["Türkçe Örnek Cümle"] || ''}</td>
-          <td>${item["İngilizce Cümle"] || item["İngilizce Örnek Cümle"] || ''}</td>
+          <td>${item["Türkçe Örnek Cümle"] || item["Türkçe Cümle"] || ''}</td>
+          <td>${item["İngilizce Örnek Cümle"] || item["İngilizce Cümle"] || ''}</td>
           <td>${item["Anlam Alanı"] || item["Kullanım Tarzı"] || ''}</td>
         </tr>`;
         tbody.innerHTML += row;
@@ -132,10 +132,12 @@
       const filtered = data.filter(item => {
         const trMatch = !turkish || (
           (item["Türkçe Deyim"] && item["Türkçe Deyim"].toLowerCase().includes(turkish)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(turkish)) ||
           (item["Bağlam Fiil"] && item["Bağlam Fiil"].toLowerCase().includes(turkish))
         );
         const enMatch = !english || (
           (item["İngilizce Deyim"] && item["İngilizce Deyim"].toLowerCase().includes(english)) ||
+          (item["Bağlam Fiil ve Anlam Kümesi"] && item["Bağlam Fiil ve Anlam Kümesi"].toLowerCase().includes(english)) ||
           (item["Bağlam Fiil"] && item["Bağlam Fiil"].toLowerCase().includes(english))
         );
         return trMatch && enMatch;
