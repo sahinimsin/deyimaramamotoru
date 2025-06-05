@@ -51,6 +51,51 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    @media screen and (max-width: 768px) {
+      .search-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .search-box input {
+        width: 90%;
+        margin: 5px 0;
+      }
+
+      .search-box button {
+        width: 50%;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: white;
+      }
+
+      td {
+        border: none;
+        padding: 5px 10px;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -87,17 +132,17 @@
       .then(response => response.json())
       .then(json => {
         data = json;
-        displayData([]); // Başlangıçta tablo boş kalsın
+        displayData([]);
       });
 
     function formatBaglamFiil(text) {
-      if (!text) return '';
+      if (!text) return 'giriş aşamasında';
       const cleaned = text.replace(/Bağlam Fiil:\s*/g, '').trim();
       const [baglam, anlamKumesi] = cleaned.split('Anlam Kümesi:');
       const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
       return `
         <details>
-          <summary><strong>Bağlam Fiil:</strong> ${baglam.trim()}</summary>
+          <summary><strong>Bağlam Fiil:</strong> ${baglam.trim()} <span style="color:gray; font-weight:normal;">(devamı)</span></summary>
           <strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}
         </details>
       `;
@@ -108,14 +153,14 @@
       tbody.innerHTML = '';
       dataArray.forEach(item => {
         const row = `<tr>
-          <td>${item["Kimlik No"] || item["ID"] || ''}</td>
-          <td>${item["Tür"] || ''}</td>
-          <td>${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || item["Bağlam Fiil"] || '')}</td>
-          <td>${item["Türkçe Deyim"] || ''}</td>
-          <td>${item["İngilizce Deyim"] || ''}</td>
-          <td>${item["Türkçe Örnek Cümle"] || item["Türkçe Cümle"] || ''}</td>
-          <td>${item["İngilizce Örnek Cümle"] || item["İngilizce Cümle"] || ''}</td>
-          <td>${item["Anlam Alanı"] || item["Kullanım Tarzı"] || ''}</td>
+          <td data-label="Kimlik No">${item["Kimlik No"] || item["ID"] || 'giriş aşamasında'}</td>
+          <td data-label="Tür">${item["Tür"] || 'giriş aşamasında'}</td>
+          <td data-label="Bağlam Fiil ve Anlam Kümesi">${formatBaglamFiil(item["Bağlam Fiil ve Anlam Kümesi"] || item["Bağlam Fiil"] || '')}</td>
+          <td data-label="Türkçe Deyim">${item["Türkçe Deyim"] || 'giriş aşamasında'}</td>
+          <td data-label="İngilizce Deyim">${item["İngilizce Deyim"] || 'giriş aşamasında'}</td>
+          <td data-label="Türkçe Cümle">${item["Türkçe Örnek Cümle"] || item["Türkçe Cümle"] || 'giriş aşamasında'}</td>
+          <td data-label="İngilizce Cümle">${item["İngilizce Örnek Cümle"] || item["İngilizce Cümle"] || 'giriş aşamasında'}</td>
+          <td data-label="Anlam Alanı">${item["Anlam Alanı"] || item["Kullanım Tarzı"] || 'giriş aşamasında'}</td>
         </tr>`;
         tbody.innerHTML += row;
       });
