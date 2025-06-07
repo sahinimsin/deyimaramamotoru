@@ -1,201 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Dr. Şahin Kesikminare">
-  <meta name="description" content="Verbolar: Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu – bağlam kümelerine göre gelişmiş çok dilli arama sistemi.">
-  <meta name="keywords" content="Verbolar, deyim, öbek fiil, bağlam kümeleri, Türkçe İngilizce sözlük, Dr. Şahin Kesikminare, çok dilli platform">
-  <meta property="og:title" content="Verbolar – Evrensel Deyim ve Öbek Fiiller Platformu">
-  <meta property="og:description" content="Bağlam kümelerine göre deyim ve öbek fiil arama motoru.">
-  <meta property="og:image" content="https://verbolar.com/sahin_kesikminare.jpg">
+  <meta name="description" content="Verbolar: çok dilli deyim ve öbek fiil arama platformu.">
+  <meta name="keywords" content="Verbolar, deyim arama, öbek fiil, Şahin Kesikminare, İngilizce Türkçe sözlük, çok dilli platform">
+  <meta property="og:title" content="Verbolar – Deyim ve Öbek Fiil Arama Platformu">
+  <meta property="og:description" content="Dr. Şahin Kesikminare tarafından geliştirilen çok dilli deyim ve öbek fiil arama platformudur.">
   <meta property="og:url" content="https://verbolar.com">
-  <title>Verbolar: Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu</title>
+  <meta property="og:image" content="https://verbolar.com/sahin_kesikminare.jpg">
   <link rel="icon" href="https://verbolar.com/favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <title>Verbolar - Deyim ve Öbek Fiil Arama Paneli</title>
   <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      padding: 20px;
-      font-size: 12px;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 0px;
-      font-family: 'Merriweather', serif;
-      font-weight: 700;
-      color: #1a1a1a;
-      text-shadow: 1px 1px 2px #ccc;
-    }
-    h2 {
-      text-align: center;
-      font-size: 16px;
-      margin-top: 4px;
-      margin-bottom: 10px;
-      font-family: 'Segoe UI', sans-serif;
-      font-weight: normal;
-      color: #444;
-    }
-    .flash {
-      text-align: center;
-      font-weight: bold;
-      color: red;
-      animation: blink 1.5s infinite;
-    }
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-    .search-box {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .search-box input, .search-box select {
-      padding: 8px;
-      margin: 0 5px;
-      width: 200px;
-      text-align: center;
-      border: 2px solid #007BFF;
-      border-radius: 4px;
-      font-weight: bold;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-      transition: box-shadow 0.3s ease;
-    }
-    .search-box input:focus, .search-box select:focus {
-      box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
-    }
-    .search-box button {
-      padding: 8px 16px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .search-box button:hover {
-      background-color: #0056b3;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      table-layout: fixed;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 6px;
-      text-align: left;
-      vertical-align: top;
-      word-break: break-word;
-      white-space: normal;
-      font-size: 12px;
-    }
-    th {
-      background-color: #007BFF;
-      color: white;
-      font-weight: bold;
-      text-align: center;
-    }
-    td:first-child {
-      font-weight: bold;
-    }
-    details summary {
-      font-weight: bold;
-      cursor: pointer;
-    }
-    details summary::after {
-      content: " [devamı]";
-      color: blue;
-      font-weight: normal;
-      font-style: italic;
-    }
-    nav {
-      text-align: right;
-      margin-bottom: 10px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #007BFF;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    @media screen and (max-width: 768px) {
-      .search-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .search-box input, .search-box select {
-        width: 90%;
-        margin: 5px 0;
-      }
-      .search-box button {
-        width: 50%;
-      }
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      thead {
-        display: none;
-      }
-      tr {
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        background-color: white;
-      }
-      td {
-        border: none;
-        padding: 5px 10px;
-        position: relative;
-      }
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: block;
-        margin-bottom: 4px;
-      }
+    body { font-family: Arial, sans-serif; padding: 20px; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; word-break: break-word; white-space: normal; font-size: 12px; }
+    th { background-color: #f2f2f2; }
+    input, button { padding: 8px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+    @media (min-width: 600px) {
+      input { width: calc(50% - 10px); margin-right: 10px; }
+      button { width: auto; }
     }
   </style>
 </head>
 <body>
-  <h1>VERBOLAR</h1>
-  <h2>Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu</h2>
-  <div class="flash">Veri girişi devam ediyor...</div>
+  <h2>Deyim ve Öbek Fiiller Arama Platformu</h2>
 
-  <details style="margin-bottom: 20px;">
-    <summary>Site Hakkında</summary>
-    <p>Bu platform, Dr. Şahin Kesikminare tarafından geliştirilen bağlam kümesi temelli çok dilli deyim ve öbek fiil veri tabanı sistemidir. Türkçe, İngilizce, Almanca ve Fransızca gibi dillerde deyimsel ifadelerin bağlam içindeki anlamlarını analiz ederek kullanıcıya zenginleştirilmiş örneklerle sunar.</p>
-  </details>
+  <input type="text" id="searchTurkish" placeholder="Türkçe">
+  <input type="text" id="searchEnglish" placeholder="İngilizce">
+  <button onclick="filterData()">Ara</button>
 
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Türkçe ara...">
-    <input type="text" id="searchInputEn" placeholder="İngilizce ara...">
-    <select id="languageFilter">
-      <option value="">Dil seçin</option>
-      <option value="tr">Türkçe</option>
-      <option value="en">İngilizce</option>
-      <option value="de">Almanca</option>
-      <option value="fr">Fransızca</option>
-    </select>
-    <select id="categoryFilter">
-      <option value="">Anlam Alanı</option>
-      <option value="psikoloji">Psikoloji</option>
-      <option value="yönetim">Yönetim</option>
-      <option value="bilişsellik">Bilişsellik</option>
-    </select>
-    <button onclick="exportResults('csv')">Export CSV</button>
-    <button onclick="exportResults('json')">Export JSON</button>
-    <span title="Filtrelenen verileri dışa aktarır.">ℹ️</span>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tür</th>
+          <th>Bağlam Fiil ve Anlam Kümesi</th>
+          <th>Öbek Fiil / Deyim (TR)</th>
+          <th>Öbek Fiil / Deyim (EN)</th>
+          <th>Türkçe Örnek Cümle</th>
+          <th>İngilizce Örnek Cümle</th>
+          <th>Kullanım Tarzı</th>
+        </tr>
+      </thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
   </div>
-  <div id="results"></div>
-  <script src="verbolar_script.js"></script>
+
+  <script>
+    let data = [];
+
+    fetch('verbolar_panel_tr-en_ornekset_20250601.json')
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        displayData(data);
+      })
+      .catch(error => console.error('Veri yükleme hatası:', error));
+
+    function formatBaglamFiil(text) {
+      if (!text) return '';
+      const [baglam, anlamKumesi] = text.split('Anlam Kümesi:');
+      const anlamlar = anlamKumesi ? anlamKumesi.split(',').map((entry, i) => `${i + 1}. ${entry.trim()}`) : [];
+      return `<strong>Bağlam Fiil:</strong> ${baglam.trim()}<br><strong>Anlam Kümesi:</strong><br>${anlamlar.join('<br>')}`;
+    }
+
+    function displayData(dataArray) {
+      const tbody = document.getElementById('resultsBody');
+      tbody.innerHTML = '';
+      dataArray.forEach(item => {
+        const row = `<tr>
+          <td>${item["Kimlik No"] || ''}</td>
+          <td>${item["Tür"] || ''}</td>
+          <td>${formatBaglamFiil(item["Bağlam Fiil"])}</td>
+          <td>${item["Türkçe Deyim"] || ''}</td>
+          <td>${item["İngilizce Deyim"] || ''}</td>
+          <td>${item["Türkçe Cümle"] || ''}</td>
+          <td>${item["İngilizce Cümle"] || ''}</td>
+          <td>${item["Anlam Alanı"] || ''}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filterData() {
+      const turkish = document.getElementById('searchTurkish').value.toLowerCase();
+      const english = document.getElementById('searchEnglish').value.toLowerCase();
+      const filtered = data.filter(item => {
+        const turkishMatch = !turkish || (
+          item["Türkçe Deyim"] &&
+          item["Türkçe Deyim"].toLowerCase().split(',').some(x => x.trim().includes(turkish))
+        );
+        const englishMatch = !english || (
+          item["İngilizce Deyim"] &&
+          item["İngilizce Deyim"].toLowerCase().split(',').some(x => x.trim().includes(english))
+        );
+        return turkishMatch && englishMatch;
+      });
+      displayData(filtered);
+    }
+  </script>
 </body>
 </html>
