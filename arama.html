@@ -145,6 +145,21 @@
   </style>
 </head>
 <body>
-  <!-- İçerik kısmı aynı kalıyor -->
+  <h1>Verbolar: Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu</h1>
+  <div class="flash">Veri girişi devam ediyor...</div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Türkçe ara...">
+    <input type="text" id="searchInputEn" placeholder="İngilizce ara...">
+    <select id="languageFilter">
+      <option value="">Dil seçin</option>
+      <option value="tr">Türkçe</option>
+      <option value="en">İngilizce</option>
+      <option value="de">Almanca</option>
+      <option value="fr">Fransızca</option>
+    </select>
+    <button onclick="exportResults()">Export</button>
+  </div>
+  <div id="results"></div>
+  <!-- JavaScript kodları buraya entegre edilecek -->
 </body>
 </html>
