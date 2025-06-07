@@ -175,8 +175,15 @@
       <option value="de">Almanca</option>
       <option value="fr">Fransızca</option>
     </select>
-    <button onclick="exportResults()">Export</button>
-    <span title="Filtrelenen verileri .csv ya da .json olarak dışa aktarır.">ℹ️</span>
+    <select id="categoryFilter">
+      <option value="">Anlam Alanı</option>
+      <option value="psikoloji">Psikoloji</option>
+      <option value="yönetim">Yönetim</option>
+      <option value="bilişsellik">Bilişsellik</option>
+    </select>
+    <button onclick="exportResults('csv')">Export CSV</button>
+    <button onclick="exportResults('json')">Export JSON</button>
+    <span title="Filtrelenen verileri dışa aktarır.">ℹ️</span>
   </div>
   <div id="results"></div>
   <script src="verbolar_script.js"></script>
