@@ -1,45 +1,201 @@
-[
-  {
-    "Tür": "deyim",
-    "Türkçe Deyim": "pes etmek",
-    "İngilizce Deyim": "give up",
-    "Türkçe Açıklama": "bir şeyi yapmaktan vazgeçmek",
-    "İngilizce Açıklama": "to stop trying to do something",
-    "Ağırlık": "yüksek",
-    "Bağlam": "kararlılık",
-    "Kullanım Tarzı": "yaygın",
-    "Yaygınlık": "çok yaygın",
-    "İngilizce Örnek": "He gave up when things got difficult.",
-    "Türkçe Örnek": "İşler zorlaşınca pes etti.",
-    "Dil": "tr,en"
-  },
-  {
-    "Tür": "deyim",
-    "Türkçe Deyim": "pes etmek 2",
-    "İngilizce Deyim": "give up 2",
-    "Türkçe Açıklama": "bir şeyi yapmaktan vazgeçmek",
-    "İngilizce Açıklama": "to stop trying to do something",
-    "Ağırlık": "yüksek",
-    "Bağlam": "kararlılık",
-    "Kullanım Tarzı": "yaygın",
-    "Yaygınlık": "çok yaygın",
-    "İngilizce Örnek": "He gave up when things got difficult.",
-    "Türkçe Örnek": "İşler zorlaşınca pes etti.",
-    "Dil": "tr,en"
-  },
-  {
-    "Tür": "deyim",
-    "Türkçe Deyim": "pes etmek 3",
-    "İngilizce Deyim": "give up 3",
-    "Türkçe Açıklama": "bir şeyi yapmaktan vazgeçmek",
-    "İngilizce Açıklama": "to stop trying to do something",
-    "Ağırlık": "yüksek",
-    "Bağlam": "kararlılık",
-    "Kullanım Tarzı": "yaygın",
-    "Yaygınlık": "çok yaygın",
-    "İngilizce Örnek": "He gave up when things got difficult.",
-    "Türkçe Örnek": "İşler zorlaşınca pes etti.",
-    "Dil": "tr,en"
-  },
-  ...
-]
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Dr. Şahin Kesikminare">
+  <meta name="description" content="Verbolar: Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu – bağlam kümelerine göre gelişmiş çok dilli arama sistemi.">
+  <meta name="keywords" content="Verbolar, deyim, öbek fiil, bağlam kümeleri, Türkçe İngilizce sözlük, Dr. Şahin Kesikminare, çok dilli platform">
+  <meta property="og:title" content="Verbolar – Evrensel Deyim ve Öbek Fiiller Platformu">
+  <meta property="og:description" content="Bağlam kümelerine göre deyim ve öbek fiil arama motoru.">
+  <meta property="og:image" content="https://verbolar.com/sahin_kesikminare.jpg">
+  <meta property="og:url" content="https://verbolar.com">
+  <title>Verbolar: Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu</title>
+  <link rel="icon" href="https://verbolar.com/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      font-size: 12px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 0px;
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-shadow: 1px 1px 2px #ccc;
+    }
+    h2 {
+      text-align: center;
+      font-size: 16px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: normal;
+      color: #444;
+    }
+    .flash {
+      text-align: center;
+      font-weight: bold;
+      color: red;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    .search-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box input, .search-box select {
+      padding: 8px;
+      margin: 0 5px;
+      width: 200px;
+      text-align: center;
+      border: 2px solid #007BFF;
+      border-radius: 4px;
+      font-weight: bold;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      transition: box-shadow 0.3s ease;
+    }
+    .search-box input:focus, .search-box select:focus {
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+    }
+    .search-box button {
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .search-box button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: left;
+      vertical-align: top;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 12px;
+    }
+    th {
+      background-color: #007BFF;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+    td:first-child {
+      font-weight: bold;
+    }
+    details summary {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    details summary::after {
+      content: " [daha fazla]";
+      color: blue;
+      font-weight: normal;
+      font-style: italic;
+    }
+    nav {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    @media screen and (max-width: 768px) {
+      .search-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .search-box input, .search-box select {
+        width: 90%;
+        margin: 5px 0;
+      }
+      .search-box button {
+        width: 50%;
+      }
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead {
+        display: none;
+      }
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: white;
+      }
+      td {
+        border: none;
+        padding: 5px 10px;
+        position: relative;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>VERBOLAR</h1>
+  <h2>Dr. Şahin Kesikminare Evrensel Deyim ve Öbek Fiiller Platformu</h2>
+  <div class="flash">Veri girişi devam ediyor...</div>
+
+  <details style="margin-bottom: 20px;">
+    <summary>Site Hakkında</summary>
+    <p>Bu platform, Dr. Şahin Kesikminare tarafından geliştirilen bağlam kümesi temelli çok dilli deyim ve öbek fiil veri tabanı sistemidir. Türkçe, İngilizce, Almanca ve Fransızca gibi dillerde deyimsel ifadelerin bağlam içindeki anlamlarını analiz ederek kullanıcıya zenginleştirilmiş örneklerle sunar.</p>
+  </details>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Türkçe ara...">
+    <input type="text" id="searchInputEn" placeholder="İngilizce ara...">
+    <select id="languageFilter">
+      <option value="">Dil seçin</option>
+      <option value="tr">Türkçe</option>
+      <option value="en">İngilizce</option>
+      <option value="de">Almanca</option>
+      <option value="fr">Fransızca</option>
+    </select>
+    <select id="categoryFilter">
+      <option value="">Anlam Alanı</option>
+      <option value="psikoloji">Psikoloji</option>
+      <option value="yönetim">Yönetim</option>
+      <option value="bilişsellik">Bilişsellik</option>
+    </select>
+    <button onclick="exportResults('csv')">Export CSV</button>
+    <button onclick="exportResults('json')">Export JSON</button>
+    <span title="Filtrelenen verileri dışa aktarır.">ℹ️</span>
+  </div>
+  <div id="results"></div>
+  <script src="verbolar_script.js"></script>
+</body>
+</html>
